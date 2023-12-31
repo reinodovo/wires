@@ -13,8 +13,8 @@ AverageAnalogRead wireReaders[WIRES];
 
 const int BASE_RESISTANCE = 10000;
 const float ANALOG_MAX = 4095;
-const float ANALOG_TOLERANCE = 0.05;
-const int RESISTANCES[COLORS] = {0, 1000, 3000, 6000, 10000};
+const float ANALOG_TOLERANCE = 0.07;
+const int RESISTANCES[COLORS] = {0, 1000, 20000, 6000, 10000};
 
 std::map<int, Rules> allRules;
 Wiring initialWiring, lastStableWiring, lastWiring;
