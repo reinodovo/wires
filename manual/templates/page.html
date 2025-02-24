@@ -1,0 +1,28 @@
+<ul>
+  <li>
+    A wire module can have 3-6 wires on it.
+  </li>
+  <li>Only the <em>one</em> correct wire needs to be cut to disarm the module.</li>
+  <li>
+    Wire ordering begins with the first on the top.
+  </li>
+</ul>
+</table>
+<table>
+  <tbody>
+    {% for rules in all_rules %}
+    <tr>
+      <td>
+        <span style="font-weight: bold;font-style: normal;text-decoration: underline;">{{ rules.wire_count }} Wires:</span>
+          {% for rule in rules.rules %}
+          <br><span>
+            {% if loop.index1 == 1 %}If {% else if loop.index1 == rules.size %}Otherwise{% else %}Otherwise, if {% endif %}
+            {% for condition in rule.conditions %}
+              {% if loop.index1 > 1 %}&nbsp;and&nbsp;{% endif %}{{ condition }}{% endfor %}, cut {{ rule.action }}.
+          </span>
+          {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

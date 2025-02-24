@@ -119,11 +119,13 @@ void onRestart() { consecutiveStableReadings = 0; }
 void onManualCode(int code) { allRules = generateRules(code); }
 
 void setup() {
-  PuzzleModule::onStart = onStart;
-  PuzzleModule::onRestart = onRestart;
-  PuzzleModule::onManualCode = onManualCode;
+  Module::onStart = onStart;
+  Module::onRestart = onRestart;
+  Module::onManualCode = onManualCode;
+  Module::name = "Wires";
+  PuzzleModule::statusLight = PuzzleModule::StatusLight(RED_PIN, GREEN_PIN);
 
-  if (!PuzzleModule::setup(PuzzleModule::StatusLight(RED_PIN, GREEN_PIN)))
+  if (!PuzzleModule::setup())
     ESP.restart();
 
   for (int i = 0; i < WIRES; i++) {
@@ -136,7 +138,7 @@ void loop() {
   PuzzleModule::update();
   for (int i = 0; i < WIRES; i++)
     wireReaders[i].update();
-  if (PuzzleModule::status() != PuzzleModule::ModuleStatus::Started)
+  if (Module::status() != Module::Status::Started)
     return;
   auto currentWiring = wiring();
   if (compare(currentWiring, lastWiring))

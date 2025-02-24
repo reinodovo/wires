@@ -3,6 +3,6 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
-manual/pages
-table.html
+manual/data/*
+*.stl
 .DS_Store
