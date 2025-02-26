@@ -14,6 +14,12 @@ wire_gap_right = 9.5;
 wire_support_thickness = 9;
 wire_support_height = 7.5;
 
+wire_blocker_thickness = 5;
+wire_blocker_height = 9.4;
+wire_blocker_hole_height = 2.5;
+wire_blocker_hole_depth = 2.9;
+wire_blocker_hole_position = 2;
+
 module top() {
     difference() {
         union() {
@@ -34,5 +40,13 @@ module bottom() {
     bomb_module_bottom(height_above_pcb = 14);
 }
 
+module wire_blocker() {
+    difference() {
+        cube([6 * wire_gap_left, wire_blocker_thickness, wire_blocker_height]);
+        translate([0, 0, wire_blocker_hole_position]) cube([6 * wire_gap_left, wire_blocker_hole_depth, wire_blocker_hole_height]);
+    }
+}
+
 color("darkgray") top();
 color("darkgray") bottom();
+wire_blocker();
