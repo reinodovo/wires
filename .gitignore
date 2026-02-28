@@ -4,5 +4,7 @@
 .vscode/launch.json
 .vscode/ipch
 manual/data/*
+*.zip
+*.sha256
 *.stl
 .DS_Store

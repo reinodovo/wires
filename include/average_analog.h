@@ -2,6 +2,7 @@
 #define AVERAGE_ANALOG_H
 
 #include <Arduino.h>
+
 #include <queue>
 
 const int SAMPLES = 128;
@@ -10,7 +11,7 @@ struct AverageAnalogRead {
   std::queue<int> values;
   int sum;
   int pin;
-  AverageAnalogRead(){};
+  AverageAnalogRead() {};
   AverageAnalogRead(int pin) : pin(pin), sum(0) {}
   void update() {
     int val = analogRead(pin);
@@ -22,10 +23,9 @@ struct AverageAnalogRead {
     }
   }
   int value() {
-    if (values.size() == 0)
-      return 0;
+    if (values.size() == 0) return 0;
     return sum / values.size();
   }
 };
 
-#endif // AVERAGE_ANALOG_H
+#endif  // AVERAGE_ANALOG_H

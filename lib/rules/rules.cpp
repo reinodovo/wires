@@ -1,62 +1,62 @@
 #include "rules.h"
+
 #include <random>
 
 std::mt19937 rng;
 
 const int MIN_RULES = 4, MAX_RULES = 5;
-const float doubleConditionChance = 0.1;
+const float double_condition_chance = 0.1;
 
-int randRange(int min, int max) { return rng() % (max - min + 1) + min; }
+int rand_range(int min, int max) { return rng() % (max - min + 1) + min; }
 
-Condition createRandomCondition(int wires) {
+Condition create_random_condition(int wires) {
   Condition condition;
-  condition.type = (ConditionType)randRange(0, 1);
-  condition.color = (Color)randRange(0, COLORS - 1);
+  condition.type = (ConditionType)rand_range(0, 1);
+  condition.color = (Color)rand_range(0, COLORS - 1);
   if (condition.type == PositionColor)
-    condition.position = randRange(0, wires - 1);
+    condition.position = rand_range(0, wires - 1);
   else
-    condition.colorCountOptions = (ColorCountOptions)randRange(0, 2);
+    condition.color_count_options = (ColorCountOptions)rand_range(0, 2);
   return condition;
 }
 
-Action createRandomAction(int wires, std::vector<Condition> conditions) {
-  std::vector<Color> allowedColors;
-  std::vector<int> allowedColorCount;
+Action create_random_action(int wires, std::vector<Condition> conditions) {
+  std::vector<Color> allowed_colors;
+  std::vector<int> allowed_color_count;
   for (auto condition : conditions) {
-    if (condition.type == ColorCount && condition.colorCountOptions != None) {
-      allowedColors.push_back(condition.color);
-      allowedColorCount.push_back(condition.colorCountOptions == One ? 1 : 2);
+    if (condition.type == color_count && condition.color_count_options != None) {
+      allowed_colors.push_back(condition.color);
+      allowed_color_count.push_back(condition.color_count_options == One ? 1 : 2);
     }
   }
   Action action;
-  if (allowedColors.size() == 0)
+  if (allowed_colors.size() == 0)
     action.type = Position;
   else
-    action.type = (ActionType)randRange(0, 1);
+    action.type = (ActionType)rand_range(0, 1);
   if (action.type == ColorPosition) {
-    int colorIndex = randRange(0, allowedColors.size() - 1);
-    action.color = allowedColors[colorIndex];
-    if (allowedColorCount[colorIndex] == 1)
-      action.colorPositionOptions = Only;
+    int colorIndex = rand_range(0, allowed_colors.size() - 1);
+    action.color = allowed_colors[colorIndex];
+    if (allowed_color_count[colorIndex] == 1)
+      action.color_position_options = Only;
     else
-      action.colorPositionOptions = (ColorPositionOptions)randRange(1, 2);
+      action.color_position_options = (ColorPositionOptions)rand_range(1, 2);
   } else
-    action.position = randRange(0, wires - 1);
+    action.position = rand_range(0, wires - 1);
   return action;
 }
 
-Rule createRandomRule(int wires, bool lastRule = false) {
+Rule create_random_rule(int wires, bool lastRule = false) {
   Rule rule;
   if (!lastRule) {
-    rule.conditions.push_back(createRandomCondition(wires));
-    if (rng() % 100 < doubleConditionChance * 100)
-      rule.conditions.push_back(createRandomCondition(wires));
+    rule.conditions.push_back(create_random_condition(wires));
+    if (rng() % 100 < double_condition_chance * 100) rule.conditions.push_back(create_random_condition(wires));
   }
-  rule.action = createRandomAction(wires, rule.conditions);
+  rule.action = create_random_action(wires, rule.conditions);
   return rule;
 }
 
-bool matches(Wiring &wiring, Rule rule) {
+bool matches(Wiring& wiring, Rule rule) {
   bool match = true;
   for (int i = 0; i < rule.conditions.size(); i++) {
     Condition condition = rule.conditions[i];
@@ -65,11 +65,10 @@ bool matches(Wiring &wiring, Rule rule) {
     else {
       int count = 0;
       for (int j = 0; j < wiring.size(); j++)
-        if (wiring[j] == condition.color)
-          count++;
-      if (condition.colorCountOptions == None)
+        if (wiring[j] == condition.color) count++;
+      if (condition.color_count_options == None)
         match &= count == 0;
-      else if (condition.colorCountOptions == One)
+      else if (condition.color_count_options == One)
         match &= count == 1;
       else
         match &= count > 1;
@@ -78,24 +77,22 @@ bool matches(Wiring &wiring, Rule rule) {
   return match;
 }
 
-bool isRedundant(Rules &rules, Rule rule) {
+bool is_redundant(Rules& rules, Rule rule) {
   for (int i = 0; i < rules.size(); i++)
     for (int j = 0; j < rules[i].conditions.size(); j++)
       for (int k = 0; k < rule.conditions.size(); k++)
-        if (rules[i].conditions[j] == rule.conditions[k])
-          return true;
+        if (rules[i].conditions[j] == rule.conditions[k]) return true;
   return false;
 }
 
-std::map<int, Rules> generateRules(int code) {
+std::map<int, Rules> generate_rules(int code) {
   rng = std::mt19937(code);
   std::map<int, Rules> rules;
   for (int i = MIN_WIRES; i <= MAX_WIRES; i++) {
-    int ruleCount = randRange(MIN_RULES, MAX_RULES);
-    while (rules[i].size() < ruleCount) {
-      Rule rule = createRandomRule(i, rules[i].size() == ruleCount - 1);
-      if (!isRedundant(rules[i], rule))
-        rules[i].push_back(rule);
+    int rule_count = rand_range(MIN_RULES, MAX_RULES);
+    while (rules[i].size() < rule_count) {
+      Rule rule = create_random_rule(i, rules[i].size() == rule_count - 1);
+      if (!is_redundant(rules[i], rule)) rules[i].push_back(rule);
     }
   }
   return rules;

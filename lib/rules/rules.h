@@ -9,20 +9,19 @@ const int MIN_WIRES = 3, MAX_WIRES = 6;
 
 enum Color { White, Blue, Red, Purple, Brown, Empty };
 
-enum ConditionType { ColorCount, PositionColor };
+enum ConditionType { color_count, PositionColor };
 
 enum ColorCountOptions { None, One, MoreThanOne };
 
 struct Condition {
   ConditionType type;
-  ColorCountOptions colorCountOptions;
+  ColorCountOptions color_count_options;
   Color color;
   int position;
-  bool operator==(const Condition &other) const {
-    if (type != other.type || color != other.color)
-      return false;
-    if (type == ColorCount)
-      return colorCountOptions == other.colorCountOptions;
+  bool operator==(const Condition& other) const {
+    if (type != other.type || color != other.color) return false;
+    if (type == color_count)
+      return color_count_options == other.color_count_options;
     else
       return position == other.position;
   }
@@ -34,7 +33,7 @@ enum ColorPositionOptions { Only, First, Last };
 
 struct Action {
   ActionType type;
-  ColorPositionOptions colorPositionOptions;
+  ColorPositionOptions color_position_options;
   Color color;
   int position;
 };
@@ -47,6 +46,6 @@ struct Rule {
 using Wiring = std::vector<Color>;
 using Rules = std::vector<Rule>;
 
-std::map<int, Rules> generateRules(int code);
+std::map<int, Rules> generate_rules(int code);
 
-#endif // RULES_H
+#endif  // RULES_H
