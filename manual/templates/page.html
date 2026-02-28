@@ -13,14 +13,15 @@
     {% for rules in all_rules %}
     <tr>
       <td>
-        <span style="font-weight: bold;font-style: normal;text-decoration: underline;">{{ rules.wire_count }} Wires:</span>
-          {% for rule in rules.rules %}
-          <br><span>
-            {% if loop.index1 == 1 %}If {% else if loop.index1 == rules.size %}Otherwise{% else %}Otherwise, if {% endif %}
-            {% for condition in rule.conditions %}
-              {% if loop.index1 > 1 %}&nbsp;and&nbsp;{% endif %}{{ condition }}{% endfor %}, cut {{ rule.action }}.
-          </span>
-          {% endfor %}
+        <span style="font-weight: bold;font-style: normal;text-decoration: underline;">{{ rules.wire_count }}
+          Wires:</span>
+        {% for rule in rules.rules %}
+        <br><span>
+          {% if loop.index == 1 %}If {% elif loop.index == rules.size %}Otherwise{% else %}Otherwise, if {% endif %}
+          {% for condition in rule.conditions %}
+          {% if loop.index > 1 %}&nbsp;and&nbsp;{% endif %}{{ condition }}{% endfor %}, cut {{ rule.action }}.
+        </span>
+        {% endfor %}
       </td>
     </tr>
     {% endfor %}
