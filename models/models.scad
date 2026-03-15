@@ -6,7 +6,7 @@ $fn = $preview ? 10 : 50;
 tolerance = 0.3;
 
 wires = 6;
-wire_radius = 4.65 / 2;
+wire_radius = 5 / 2;
 wire_distance_bottom = 15;
 wire_distance_side = 15;
 wire_gap_left = (size - 2 * wire_distance_side) / (wires - 1);
@@ -22,11 +22,7 @@ wire_blocker_hole_position = 2;
 
 module top() {
     difference() {
-        union() {
-            bomb_module_top(height_above_pcb = 14, module_type = 1);
-            translate([wire_distance_side, size / 2, -wire_support_height / 2 - wall_thickness]) cube([wire_support_thickness, 6 * wire_gap_left, wire_support_height], center = true);
-            translate([size - wire_distance_side, wire_distance_bottom + 5 / 2 * wire_gap_right, -wire_support_height / 2 - wall_thickness]) cube([wire_support_thickness, 6 * wire_gap_right, wire_support_height], center = true);
-        }
+        bomb_module_top(height_above_pcb = 14, module_type = 1);
         for (i = [0:wires - 1]) {
             translate([wire_distance_side, wire_distance_bottom + i * wire_gap_left])
                 cylinder(h = 100, r1 = wire_radius + tolerance / 2, r2 = wire_radius + tolerance / 2, center = true);

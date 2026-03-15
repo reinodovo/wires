@@ -9,13 +9,13 @@ const int RED_PIN = 26, GREEN_PIN = 27;
 PuzzleModule module(StatusLight(RED_PIN, GREEN_PIN));
 
 const int WIRES = 6;
-const int WIRE_PINS[WIRES] = {33, 32, 35, 34, 39, 36};
+const int WIRE_PINS[WIRES] = {36, 39, 34, 35, 32, 33};
 AverageAnalogRead wire_readers[WIRES];
 
-const int BASE_RESISTANCE = 10000;
+const int BASE_RESISTANCE = 3000;
 const float ANALOG_MAX = 4095;
 const float ANALOG_TOLERANCE = 0.07;
-const int RESISTANCES[COLORS] = {0, 1000, 20000, 6000, 10000};
+const int RESISTANCES[COLORS] = {0, 6000, 10000, 3000, 1000};
 
 std::map<int, Rules> all_rules;
 Wiring initial_wiring, last_stable_wiring, last_wiring;

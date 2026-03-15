@@ -7,7 +7,7 @@
 const int COLORS = 5;
 const int MIN_WIRES = 3, MAX_WIRES = 6;
 
-enum Color { White, Blue, Red, Purple, Brown, Empty };
+enum Color { White, Black, Blue, Red, Yellow, Empty };
 
 enum ConditionType { color_count, PositionColor };
 

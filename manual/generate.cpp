@@ -5,14 +5,14 @@ std::string color_to_string(Color color) {
   switch (color) {
     case White:
       return "white";
+    case Black:
+      return "black";
     case Blue:
       return "blue";
     case Red:
       return "red";
-    case Purple:
-      return "purple";
-    case Brown:
-      return "brown";
+    case Yellow:
+      return "yellow";
   }
   return "";
 }

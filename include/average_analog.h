@@ -5,7 +5,7 @@
 
 #include <queue>
 
-const int SAMPLES = 128;
+const int SAMPLES = 16;
 
 struct AverageAnalogRead {
   std::queue<int> values;
