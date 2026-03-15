@@ -35,7 +35,7 @@ std::string position_to_string(int position, int wires) {
 
 std::string condition_to_string(Condition condition, int wires) {
   std::string condition_str = "";
-  if (condition.type == color_count) {
+  if (condition.type == ColorCount) {
     condition_str += "there";
     if (condition.color_count_options == None)
       condition_str += " are no";

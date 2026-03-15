@@ -9,7 +9,7 @@ const int MIN_WIRES = 3, MAX_WIRES = 6;
 
 enum Color { White, Black, Blue, Red, Yellow, Empty };
 
-enum ConditionType { color_count, PositionColor };
+enum ConditionType { ColorCount, PositionColor };
 
 enum ColorCountOptions { None, One, MoreThanOne };
 
@@ -20,7 +20,7 @@ struct Condition {
   int position;
   bool operator==(const Condition& other) const {
     if (type != other.type || color != other.color) return false;
-    if (type == color_count)
+    if (type == ColorCount)
       return color_count_options == other.color_count_options;
     else
       return position == other.position;
